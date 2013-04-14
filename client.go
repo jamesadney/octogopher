@@ -46,7 +46,7 @@ type Client struct {
 }
 
 // TODO: Use whichever auth is enabled
-func (c *Client) authorizeRequest(req *http.Request) {
+func (c *Client) authenticateRequest(req *http.Request) {
 	if c.password != "" {
 		req.SetBasicAuth(c.login, c.password)
 	}
@@ -62,7 +62,7 @@ func (c *Client) NewRequest(method, relativeURL string, body io.Reader) (*http.R
 		return nil, err
 	}
 
-	c.authorizeRequest(req)
+	c.authenticateRequest(req)
 
 	return req, nil
 }

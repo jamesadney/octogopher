@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
@@ -114,6 +115,27 @@ func (c *Client) Get(relativeURL string, params url.Values) (*http.Response, err
 }
 
 // users //
+
+func (c *Client) Users(since int) (users []*User, err error) {
+	params := url.Values{}
+	params.Set("since", strconv.Itoa(since))
+
+	resp, err := c.Get(USERS_URL, params)
+	if err != nil {
+		return nil, err
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		return nil, err
+	}
+
+	json.Unmarshal(body, &users)
+
+	return users, nil
+}
 
 func (c *Client) AuthenticatedUser() (*User, error) {
 	return c.getUser(AUTHUSER_URL)

@@ -8,7 +8,7 @@ import (
 // net/url doesn't replace `/` and `;` because it works on the entire path, not
 // just one element.
 func encodeURLPathDelimiters(pathElement string) string {
-	r := strings.NewReplacer("/", "%%2F", ";", "%%3B")
+	r := strings.NewReplacer("/", "%2F", ";", "%3B")
 	return r.Replace(pathElement)
 }
 

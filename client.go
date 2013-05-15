@@ -32,7 +32,7 @@ func NewClientOAuth(token string) *Client {
 	return c
 }
 
-// TODO: Deal with null json fields required by api.
+// TODO: Deal with null json fields as required by api.
 
 type Client struct {
 	ApiRoot   string
@@ -87,7 +87,6 @@ func (c *Client) Do(req *http.Request) (*http.Response, error) {
 }
 
 // TODO: Should params have a different type?
-// TODO: Use relative URL here, not absolute.
 func (c *Client) Get(relativeURL string, params url.Values) (*http.Response, error) {
 	pathAndParams := strings.Join([]string{relativeURL, params.Encode()}, "?")
 

@@ -10,7 +10,7 @@ import (
 // Default time value is ignored in methods
 var NIL_TIME = time.Time{}
 
-func (c *Client) UserGists(username string, since time.Time) (gists []Gist, err error) {
+func (c *Client) UserGists(username string, since time.Time) (gists []*Gist, err error) {
 	params := url.Values{}
 
 	if since != NIL_TIME {

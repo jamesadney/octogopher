@@ -100,12 +100,8 @@ func (c *Client) Get(relativeURL string, params url.Values) (*http.Response, err
 		return nil, err
 	}
 
-	// TODO: Should this be in the Client.Do() method?
-	// TODO: Should http errors be returned as errors?
-	// TODO: clean up status code catching stuff
-	// TODO: catch 500 errors
-	if resp.StatusCode%400 < 100 {
-		return nil, ClientError(resp)
+	if err = catchHttpErrors(resp); err != nil {
+		return nil, err
 	}
 
 	return resp, nil

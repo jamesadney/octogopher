@@ -46,3 +46,8 @@ type User struct {
 		PrivateRepos  int    `json:"private_repos"`
 	} `json:"plan"`
 }
+
+// TODO:
+func (u *User) Update() error {
+	return nil
+}

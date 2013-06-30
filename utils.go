@@ -9,11 +9,13 @@ import (
 // TODO: Should this be in the Client.Do() method?
 // TODO: Should http errors be returned as errors?
 // TODO: clean up status code catching stuff
-// TODO: catch 500 errors
 func catchHttpErrors(resp *http.Response) error {
 	if resp.StatusCode%400 < 100 {
 		return ClientError(resp)
+	} else if resp.StatusCode%500 < 100 {
+		return ServerError(resp)
 	}
+	return nil
 }
 
 // net/url doesn't replace `/` and `;` because it works on the entire path, not

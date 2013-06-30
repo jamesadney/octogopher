@@ -50,6 +50,7 @@ func (c *Client) authenticateRequest(req *http.Request) {
 	}
 }
 
+// Create an http.Request object initialized for use with octogopher.
 func (c *Client) NewRequest(method, relativeURL string, body io.Reader) (*http.Request,
 	error) {
 
@@ -60,14 +61,14 @@ func (c *Client) NewRequest(method, relativeURL string, body io.Reader) (*http.R
 		return nil, err
 	}
 
+	req.Header.Set("User-Agent", c.UserAgent)
+
 	c.authenticateRequest(req)
 
 	return req, nil
 }
 
 func (c *Client) Do(req *http.Request) (*http.Response, error) {
-	req.Header.Set("User-Agent", c.UserAgent)
-
 	// Make sure content length is set
 	if req.Body != nil && req.ContentLength <= 0 {
 		content, err := ioutil.ReadAll(req.Body)
